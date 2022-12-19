@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Builder
+@Table(name = "board")
 public class Board {
 
     @Id
@@ -40,8 +41,3 @@ public class Board {
     private boolean finished;
 }
 
-enum Category {
-
-    Sports, Project, Purchase
-
-}

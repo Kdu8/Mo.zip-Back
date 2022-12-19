@@ -1,7 +1,6 @@
 package kdu8.mozip.entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Builder
+@Table(name = "user")
 public class User {
 
     @Id
@@ -25,6 +24,6 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "token", unique = true)
-    private String token;
+
+
 }
