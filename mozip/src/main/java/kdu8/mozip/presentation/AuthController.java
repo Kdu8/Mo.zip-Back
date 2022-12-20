@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 @RestController
-public class Controller {
+public class AuthController {
 
     private final EmailService emailService;
     private final UserService userService;
 
-    @PostMapping("/auth/join")
+    @PostMapping("/join")
     public ResponseEntity<String> join(
             @RequestBody RegisterRequest registerRequest) throws Exception {
         String emailAddress = registerRequest.getEmail();
@@ -33,7 +33,7 @@ public class Controller {
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 
-    @PostMapping("/auth/emailVerify")
+    @PostMapping("/emailVerify")
     @ApiOperation(value = "회원 가입시 이메인 인증", notes = "기존사용하고 있는 이메일을 통해 인증")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -52,7 +52,7 @@ public class Controller {
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 
-    @PostMapping("/auth/emailConfirm")
+    @PostMapping("/emailConfirm")
     @ApiOperation(value = "인증코드 확인", notes = "받은 인증코드가 존재하는지 확인 후 세션 생성")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
