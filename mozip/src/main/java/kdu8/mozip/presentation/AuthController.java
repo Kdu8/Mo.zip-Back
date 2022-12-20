@@ -34,7 +34,7 @@ public class AuthController {
     }
 
     @PostMapping("/emailVerify")
-    @ApiOperation(value = "회원 가입시 이메인 인증", notes = "기존사용하고 있는 이메일을 통해 인증")
+    @ApiOperation(value = "이메일 인증 코드 보내기", notes = "기존 사용하고 있는 이메일을 통해 인증")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
