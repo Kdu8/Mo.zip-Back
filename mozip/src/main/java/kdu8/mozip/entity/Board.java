@@ -1,9 +1,7 @@
 package kdu8.mozip.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,7 +9,7 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
+@Getter @Setter
 @Builder
 @Table(name = "board")
 public class Board {
@@ -24,7 +22,9 @@ public class Board {
     private int writerId;
     @Enumerated
     private Category category;
+    private int maxApp;
     private LocalDateTime exDate;
+    @ColumnDefault("false")
     private boolean finished;
 }
 
