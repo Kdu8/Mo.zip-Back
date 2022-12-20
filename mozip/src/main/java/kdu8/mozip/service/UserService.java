@@ -14,13 +14,13 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public User login(SignInRequest request) throws Exception {
-        User user = userRepository.findAllByEmail(request.getEmail()).orElseThrow(()-> new Exception("존재하지 않는 이메일입니다"));
-
-        return User.builder()
-                .name(user.getName())
-                .email(user.getEmail())
-                .token(user.getToken())
-                .build();
-    }
+//    public User login(SignInRequest request) throws Exception {
+//        User user = userRepository.findAllByEmail(request.getEmail()).orElseThrow(()-> new Exception("존재하지 않는 이메일입니다"));
+//
+//        return User.builder()
+//                .name(user.getName())
+//                .email(user.getEmail())
+//                .token(user.getToken())
+//                .build();
+//    }
 }

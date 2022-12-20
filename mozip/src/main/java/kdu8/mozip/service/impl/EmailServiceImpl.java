@@ -16,17 +16,17 @@ import org.springframework.stereotype.Service;
 public class EmailServiceImpl implements EmailService {
 
     @Autowired
-    JavaMailSender emailSender;
+    JavaMailSender EmailSender;
 
     public static final String ePw = createKey();
 
     private MimeMessage createMessage(String to)throws Exception{
         System.out.println("보내는 대상 : "+ to);
         System.out.println("인증 번호 : "+ePw);
-        MimeMessage  message = emailSender.createMimeMessage();
+        MimeMessage  message = EmailSender.createMimeMessage();
 
         message.addRecipients(RecipientType.TO, to);//보내는 대상
-        message.setSubject("Babble회원가입 이메일 인증");//제목
+        message.setSubject("Babble 회원가입 이메일 인증");//제목
 
         String msgg="";
         msgg+= "<div style='margin:100px;'>";
@@ -78,7 +78,7 @@ public class EmailServiceImpl implements EmailService {
         // TODO Auto-generated method stub
         MimeMessage message = createMessage(to);
         try{//예외처리
-            emailSender.send(message);
+            EmailSender.send(message);
         }catch(MailException es){
             es.printStackTrace();
             throw new IllegalArgumentException();
