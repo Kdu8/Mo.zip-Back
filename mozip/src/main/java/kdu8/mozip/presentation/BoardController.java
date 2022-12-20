@@ -24,4 +24,8 @@ public class BoardController {
         return ResponseEntity.status(HttpStatus.OK).body(boardPage);
     }
 
+    @GetMapping("/{id}")
+    public Board getBoard(@PathVariable int id) throws Exception {
+           return boardService.getBoard(id);
+    }
 }

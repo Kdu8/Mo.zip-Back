@@ -16,12 +16,7 @@ public class Applicant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
-
-    @Column(name = "board_id")
     private int boardId;
-
-    @Column(name = "user_id")
     private int userId;
 }

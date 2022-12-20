@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,5 +22,13 @@ public class BoardService {
 
     public Page<Board> getBoardListWithPage(Pageable pageable) {
         return boardRepository.findAll(pageable);
+    }
+
+    public Board getBoard(int id) throws Exception {
+        Optional<Board> board = boardRepository.findById(id);
+        if (board.isPresent()) {
+            return board.get();
+        }
+        throw new Exception("보드 없음");
     }
 }

@@ -15,9 +15,6 @@ import javax.persistence.*;
 public class VerifyCode {
 
     @Id
-    @Column(name = "user_id")
     private int userId;
-
-    @Column(name = "verify_code")
     private String verifyCode;
 }
