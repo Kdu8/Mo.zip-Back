@@ -1,5 +1,6 @@
 package kdu8.mozip.service;
 
+import kdu8.mozip.entity.Applicant;
 import kdu8.mozip.entity.Board;
 import kdu8.mozip.entity.User;
 import kdu8.mozip.presentation.dto.BoardRequest;
@@ -14,6 +15,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -84,6 +86,9 @@ public class BoardService {
         Optional<Board> boardOptional = boardRepository.findById(boardId);
         Board board = checkBoard(boardOptional, user.getId());
         // 참조중인 applicant 테이블도 같이 삭제해야 함
+
+        applicantRepository.deleteAllByBoardId(boardId);
+
         boardRepository.delete(board);
     }
 }

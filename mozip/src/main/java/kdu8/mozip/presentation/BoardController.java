@@ -69,4 +69,17 @@ public class BoardController {
         boardService.deleteBoard(user, id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("success");
     }
+
+    @GetMapping("/{id}/toggle-apply")
+    public ResponseEntity<String> toggleApply(HttpServletRequest request, @PathVariable int id) throws Exception{
+        User user;
+        try {
+            HttpSession session = request.getSession(false);
+            user = (User) session.getAttribute("user");
+        } catch (NullPointerException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+        Board board = boardService.getBoard(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("success");
+    }
 }
