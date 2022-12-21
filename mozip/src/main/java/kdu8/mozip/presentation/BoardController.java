@@ -3,6 +3,8 @@ package kdu8.mozip.presentation;
 import kdu8.mozip.entity.Board;
 import kdu8.mozip.entity.User;
 import kdu8.mozip.presentation.dto.BoardRequest;
+import kdu8.mozip.presentation.dto.BoardResponse;
+import kdu8.mozip.service.ApplicantService;
 import kdu8.mozip.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpSession;
 public class BoardController {
 
     private final BoardService boardService;
+    private final ApplicantService applicantService;
 
     @GetMapping("")
     public ResponseEntity<Page<Board>> getBoards(Pageable pageable) throws Exception {
@@ -40,7 +43,7 @@ public class BoardController {
     }
 
     @GetMapping("/{id}")
-    public Board getBoard(@PathVariable int id) throws Exception {
+    public BoardResponse getBoard(@PathVariable int id) throws Exception {
            return boardService.getBoard(id);
     }
 
@@ -79,7 +82,8 @@ public class BoardController {
         } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
-        Board board = boardService.getBoard(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("success");
+
+        applicantService.toggleApply(boardService.getBoard(id).getBoard(), user.getId());
+        return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 }

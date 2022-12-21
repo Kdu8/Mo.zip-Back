@@ -4,6 +4,7 @@ import kdu8.mozip.entity.Applicant;
 import kdu8.mozip.entity.Board;
 import kdu8.mozip.entity.User;
 import kdu8.mozip.presentation.dto.BoardRequest;
+import kdu8.mozip.presentation.dto.BoardResponse;
 import kdu8.mozip.repository.ApplicantRepository;
 import kdu8.mozip.repository.BoardRepository;
 import kdu8.mozip.repository.UserRepository;
@@ -15,6 +16,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,12 +39,24 @@ public class BoardService {
         return boardRepository.findAll(pageable);
     }
 
-    public Board getBoard(int id) throws Exception {
+    public BoardResponse getBoard(int id) throws Exception {
         Optional<Board> boardOptional = boardRepository.findById(id);
         if (boardOptional.isPresent()) {
             Board board =  boardOptional.get();
             checkExDate(board);
-            return board;
+
+            List<Applicant> applicants = applicantRepository.findAllByBoardId(board.getId());
+            List<User> users = new ArrayList<>();
+
+            for(Applicant applicant : applicants) {
+                User user = userRepository.findById(applicant.getUserId()).get();
+                users.add(user);
+            }
+
+            return BoardResponse.builder()
+                    .board(board)
+                    .users(users)
+                    .build();
         }
         throw new Exception("보드 없음");
     }
