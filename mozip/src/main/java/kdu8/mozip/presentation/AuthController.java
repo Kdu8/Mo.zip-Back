@@ -34,10 +34,9 @@ public class AuthController {
     }
 
     @PostMapping("/emailVerify")
-    @ApiOperation(value = "이메일 인증 코드 보내기", notes = "기존 사용하고 있는 이메일을 통해 인증")
+    @ApiOperation(value = "이메일 인증 코드 보내기", notes = "request로 들어온 Email로 인증 코드를 보냄")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
@@ -56,7 +55,6 @@ public class AuthController {
     @ApiOperation(value = "인증코드 확인", notes = "받은 인증코드가 존재하는지 확인 후 세션 생성")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
@@ -70,6 +68,12 @@ public class AuthController {
     }
 
     @GetMapping("/logout")
+    @ApiOperation(value = "사용자 로그아웃", notes = "세션을 제거")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
     public ResponseEntity<String> logout(HttpServletRequest request) {
         try {
             HttpSession session = request.getSession(false);

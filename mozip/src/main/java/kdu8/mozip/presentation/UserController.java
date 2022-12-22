@@ -1,5 +1,8 @@
 package kdu8.mozip.presentation;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import kdu8.mozip.entity.User;
 import kdu8.mozip.presentation.dto.BoardListResponse;
 import kdu8.mozip.presentation.dto.UserResponse;
@@ -21,6 +24,12 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("uers/me")
+    @ApiOperation(value = "마이 페이지", notes = "요청을 날린 유저의 정보 및 유저가 쓴 글, 신청한 글을 응답함")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "로그인 되지 않음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
     public ResponseEntity<UserResponse> getMyData(HttpServletRequest request) {
 
         User user;

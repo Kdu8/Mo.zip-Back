@@ -36,7 +36,7 @@ public class BoardService {
         }
     }
 
-    public List<BoardListResponse> getBoardListWithPage(@PageableDefault(size=10, sort="exDate",direction = Sort.Direction.DESC) Pageable pageable) {
+    public List<BoardListResponse> getBoardListWithPage(@PageableDefault(size=10, direction = Sort.Direction.DESC) Pageable pageable) {
         List<Board> listBoard = boardRepository.findAll(pageable).getContent();
         //nullpoint Ex 가능성 있음
 
