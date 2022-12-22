@@ -11,7 +11,11 @@ public interface ApplicantRepository extends JpaRepository<Applicant, Integer> {
 
     List<Applicant> findAllByBoardId(int id);
 
+    List<Applicant> findAllByUserId(int id);
+
     void deleteAllByBoardId(int id);
 
     boolean existsByBoardId(int id);
+
+    int countAllByBoardId(int id);
 }

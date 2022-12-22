@@ -2,6 +2,7 @@ package kdu8.mozip.presentation;
 
 import kdu8.mozip.entity.Board;
 import kdu8.mozip.entity.User;
+import kdu8.mozip.presentation.dto.BoardListResponse;
 import kdu8.mozip.presentation.dto.BoardRequest;
 import kdu8.mozip.presentation.dto.BoardResponse;
 import kdu8.mozip.service.ApplicantService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,8 +27,8 @@ public class BoardController {
     private final ApplicantService applicantService;
 
     @GetMapping("")
-    public ResponseEntity<Page<Board>> getBoards(Pageable pageable) throws Exception {
-        Page<Board> boardPage = boardService.getBoardListWithPage(pageable);
+    public ResponseEntity<List<BoardListResponse>> getBoards(Pageable pageable) throws Exception {
+        List<BoardListResponse> boardPage = boardService.getBoardListWithPage(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(boardPage);
     }
     @PostMapping("")

@@ -3,6 +3,7 @@ package kdu8.mozip.service;
 import kdu8.mozip.entity.Applicant;
 import kdu8.mozip.entity.Board;
 import kdu8.mozip.entity.User;
+import kdu8.mozip.presentation.dto.BoardListResponse;
 import kdu8.mozip.presentation.dto.BoardRequest;
 import kdu8.mozip.presentation.dto.BoardResponse;
 import kdu8.mozip.repository.ApplicantRepository;
@@ -35,8 +36,17 @@ public class BoardService {
         }
     }
 
-    public Page<Board> getBoardListWithPage(@PageableDefault(size=10, sort="exDate",direction = Sort.Direction.DESC) Pageable pageable) {
-        return boardRepository.findAll(pageable);
+    public List<BoardListResponse> getBoardListWithPage(@PageableDefault(size=10, sort="exDate",direction = Sort.Direction.DESC) Pageable pageable) {
+        List<Board> listBoard = boardRepository.findAll(pageable).getContent();
+        //nullpoint Ex 가능성 있음
+
+        List<BoardListResponse> dtoList = new ArrayList<>();
+
+        for(Board board : listBoard ) {
+            dtoList.add(BoardListResponse.getBoardListResponse(board, applicantRepository));
+        }
+
+        return dtoList;
     }
 
     public BoardResponse getBoard(int id) throws Exception {

@@ -59,10 +59,6 @@ public class ApplicantService {
         } else {
             throw new Exception("작성자는 신청할 수 없습니다.");
         }
-
-
-
-
     }
 
 }

@@ -1,14 +1,21 @@
 package kdu8.mozip.service;
 
+import kdu8.mozip.entity.Applicant;
+import kdu8.mozip.entity.Board;
 import kdu8.mozip.entity.User;
 import kdu8.mozip.entity.VerifyCode;
+import kdu8.mozip.presentation.dto.BoardListResponse;
 import kdu8.mozip.presentation.dto.SignInRequest;
+import kdu8.mozip.repository.ApplicantRepository;
+import kdu8.mozip.repository.BoardRepository;
 import kdu8.mozip.repository.UserRepository;
 import kdu8.mozip.repository.VerifyCodeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.net.http.HttpRequest;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,6 +24,10 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final VerifyCodeRepository verifyCodeRepository;
+
+    private final BoardRepository boardRepository;
+
+    private final ApplicantRepository applicantRepository;
 
     public void saveVerifyCode(String email, String verifyCode) throws Exception {
         Optional<User> user = userRepository.findByEmail(email);
@@ -49,13 +60,31 @@ public class UserService {
         }
     }
 
-//    public User login(SignInRequest request) throws Exception {
-//        User user = userRepository.findAllByEmail(request.getEmail()).orElseThrow(()-> new Exception("존재하지 않는 이메일입니다"));
-//
-//        return User.builder()
-//                .name(user.getName())
-//                .email(user.getEmail())
-//                .token(user.getToken())
-//                .build();
-//    }
+    public List<BoardListResponse> getMyBoards(int userId) {
+
+        List<Board> listBoard = boardRepository.findAllByWriterId(userId);
+
+        List<BoardListResponse> dtoList = new ArrayList<>();
+
+        for(Board board : listBoard ) {
+            dtoList.add(BoardListResponse.getBoardListResponse(board, applicantRepository));
+        }
+
+        return dtoList;
+    }
+
+    public List<BoardListResponse> getMyApplyBoards(int userId) {
+
+        List<Applicant> applicantList = applicantRepository.findAllByUserId(userId);
+        List<BoardListResponse> dtoList = new ArrayList<>();
+
+        for (Applicant applicant: applicantList) {
+            Board board = boardRepository.findById(applicant.getBoardId()).get();
+            dtoList.add(BoardListResponse.getBoardListResponse(board, applicantRepository));
+        }
+
+
+
+        return dtoList;
+    }
 }
