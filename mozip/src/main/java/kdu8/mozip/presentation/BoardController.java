@@ -22,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
+@CrossOrigin("*")
 @RequiredArgsConstructor
 @RequestMapping("/boards")
 public class BoardController {
