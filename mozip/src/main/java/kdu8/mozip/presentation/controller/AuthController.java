@@ -1,10 +1,10 @@
-package kdu8.mozip.presentation;
+package kdu8.mozip.presentation.controller;
 
 import io.swagger.annotations.*;
 import kdu8.mozip.entity.User;
-import kdu8.mozip.presentation.dto.RegisterRequest;
-import kdu8.mozip.presentation.dto.SendEmailRequest;
-import kdu8.mozip.presentation.dto.VerifyCodeRequest;
+import kdu8.mozip.presentation.dto.auth.RegisterRequest;
+import kdu8.mozip.presentation.dto.auth.SendEmailRequest;
+import kdu8.mozip.presentation.dto.auth.VerifyCodeRequest;
 import kdu8.mozip.service.EmailService;
 import kdu8.mozip.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -56,16 +56,20 @@ public class AuthController {
     @ApiOperation(value = "인증코드 확인", notes = "받은 인증코드가 존재하는지 확인 후 세션 생성")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 400, message = "잘못된 인증코드"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<User> emailConfirm(
-            @RequestBody VerifyCodeRequest verifyCode, HttpServletRequest request) throws Exception {
-        User user = userService.completeVerification(verifyCode.getVerifyCode());
-        HttpSession session = request.getSession();
+    public ResponseEntity<User> emailConfirm(@RequestBody VerifyCodeRequest verifyCode, HttpServletRequest request) throws Exception {
+        try {
+            User user = userService.completeVerification(verifyCode.getVerifyCode());
+            HttpSession session = request.getSession();
 
-        session.setAttribute("user", user);
-        return ResponseEntity.status(HttpStatus.OK).body(user);
+            session.setAttribute("user", user);
+            return ResponseEntity.status(HttpStatus.OK).body(user);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 
     @GetMapping("/logout")

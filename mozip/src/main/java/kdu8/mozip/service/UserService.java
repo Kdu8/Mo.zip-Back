@@ -4,8 +4,7 @@ import kdu8.mozip.entity.Applicant;
 import kdu8.mozip.entity.Board;
 import kdu8.mozip.entity.User;
 import kdu8.mozip.entity.VerifyCode;
-import kdu8.mozip.presentation.dto.BoardListResponse;
-import kdu8.mozip.presentation.dto.SignInRequest;
+import kdu8.mozip.presentation.dto.board.BoardListResponse;
 import kdu8.mozip.repository.ApplicantRepository;
 import kdu8.mozip.repository.BoardRepository;
 import kdu8.mozip.repository.UserRepository;
@@ -13,7 +12,6 @@ import kdu8.mozip.repository.VerifyCodeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.net.http.HttpRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

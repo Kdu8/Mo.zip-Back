@@ -1,4 +1,4 @@
-package kdu8.mozip.presentation.dto;
+package kdu8.mozip.presentation.dto.board;
 
 import kdu8.mozip.entity.Category;
 import lombok.AllArgsConstructor;

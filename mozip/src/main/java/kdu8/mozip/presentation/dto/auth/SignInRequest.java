@@ -1,4 +1,4 @@
-package kdu8.mozip.presentation.dto;
+package kdu8.mozip.presentation.dto.auth;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

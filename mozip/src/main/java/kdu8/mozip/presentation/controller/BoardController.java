@@ -1,17 +1,16 @@
-package kdu8.mozip.presentation;
+package kdu8.mozip.presentation.controller;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import kdu8.mozip.entity.Board;
 import kdu8.mozip.entity.User;
-import kdu8.mozip.presentation.dto.BoardListResponse;
-import kdu8.mozip.presentation.dto.BoardRequest;
-import kdu8.mozip.presentation.dto.BoardResponse;
+import kdu8.mozip.presentation.dto.board.BoardListResponse;
+import kdu8.mozip.presentation.dto.board.BoardRequest;
+import kdu8.mozip.presentation.dto.board.BoardResponse;
 import kdu8.mozip.service.ApplicantService;
 import kdu8.mozip.service.BoardService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

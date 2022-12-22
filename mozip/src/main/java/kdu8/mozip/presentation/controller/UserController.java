@@ -1,11 +1,11 @@
-package kdu8.mozip.presentation;
+package kdu8.mozip.presentation.controller;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import kdu8.mozip.entity.User;
-import kdu8.mozip.presentation.dto.BoardListResponse;
-import kdu8.mozip.presentation.dto.UserResponse;
+import kdu8.mozip.presentation.dto.board.BoardListResponse;
+import kdu8.mozip.presentation.dto.user.UserResponse;
 import kdu8.mozip.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

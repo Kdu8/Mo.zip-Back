@@ -18,10 +18,12 @@ public class EmailService {
 
     private final JavaMailSender EmailSender;
 
-    public static final String ePw = createKey();
+    private String ePw;
 
     private MimeMessage createMessage(String to)throws Exception{
         MimeMessage  message = EmailSender.createMimeMessage();
+
+        ePw = createKey();
 
         message.addRecipients(RecipientType.TO, to);//보내는 대상
         message.setSubject("Mo.zip 이메일 인증");//제목

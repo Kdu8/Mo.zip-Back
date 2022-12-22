@@ -1,4 +1,4 @@
-package kdu8.mozip.presentation.dto;
+package kdu8.mozip.presentation.dto.board;
 
 import kdu8.mozip.entity.Board;
 import kdu8.mozip.entity.Category;
@@ -7,14 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Builder

@@ -1,6 +1,7 @@
-package kdu8.mozip.presentation.dto;
+package kdu8.mozip.presentation.dto.user;
 
 import kdu8.mozip.entity.User;
+import kdu8.mozip.presentation.dto.board.BoardListResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
