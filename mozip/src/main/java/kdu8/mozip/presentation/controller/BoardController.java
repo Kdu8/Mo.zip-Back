@@ -69,7 +69,9 @@ public class BoardController {
     @ApiOperation(value = "Board 가져오기", notes = "Id에는 BoardId가 들어감")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 404, message = "게시글이 존재하지 않음"),
             @ApiResponse(code = 500, message = "서버 오류")
+
     })
     public ResponseEntity<BoardResponse> getBoard(@PathVariable int id) throws Exception {
            try {
@@ -83,7 +85,9 @@ public class BoardController {
     @ApiOperation(value = "Board 업데이트 하기", notes = "로그인이 되어 있어야함")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 400, message = "작성자가 아님"),
             @ApiResponse(code = 401, message = "로그인 되지 않음"),
+            @ApiResponse(code = 404, message = "게시글이 존재하지 않음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<Board> updateBoard(@RequestBody BoardRequest boardRequest, HttpServletRequest request, @PathVariable int id) throws Exception {
@@ -105,7 +109,9 @@ public class BoardController {
     @ApiOperation(value = "Board 삭제하기", notes = "로그인이 되어 있어야함")
     @ApiResponses({
             @ApiResponse(code = 204, message = "성공"),
+            @ApiResponse(code = 400, message = "작성자가 아님"),
             @ApiResponse(code = 401, message = "로그인 되지 않음"),
+            @ApiResponse(code = 404, message = "게시글이 존재하지 않음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<String> deleteBoard(HttpServletRequest request, @PathVariable int id) throws Exception {
@@ -127,6 +133,7 @@ public class BoardController {
     @ApiOperation(value = "Board에 신청하기", notes = "로그인이 되어 있어야함")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 400, message = "신청할 수 없는 게시글"),
             @ApiResponse(code = 401, message = "로그인 되지 않음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })

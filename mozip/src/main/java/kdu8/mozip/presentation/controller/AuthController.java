@@ -28,6 +28,15 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping("/join")
+    @ApiOperation(value = "회원가입 하기", notes = "Email, name을 받고 인증코드를 보냄")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 302, message = "유저가 이미 존재함"),
+            @ApiResponse(code = 400, message = "Email이 올바르지 않거나 모든 오류"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+
     public ResponseEntity<String> join(
             @RequestBody RegisterRequest registerRequest) throws Exception {
         String emailAddress = registerRequest.getEmail();
@@ -37,8 +46,8 @@ public class AuthController {
             userService.saveVerifyCode(emailAddress, verifyCode);
             return ResponseEntity.status(HttpStatus.OK).body("success");
         }catch (UserExistException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.FOUND).body(e.getMessage());
+        }catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email이 올바르지 않습니다");
         }
     }
@@ -47,6 +56,7 @@ public class AuthController {
     @ApiOperation(value = "이메일 인증 코드 보내기", notes = "request로 들어온 Email로 인증 코드를 보냄")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 400, message = "Email이 올바르지 않거나 모든 오류"),
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
@@ -59,10 +69,10 @@ public class AuthController {
         try {
             String verifyCode = emailService.sendSimpleMessage(emailAddress);
             userService.saveVerifyCode(emailAddress, verifyCode);
-        }catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email이 올바르지 않습니다");
         }catch (UserDoesntExistException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email이 올바르지 않습니다");
         }
 
         return ResponseEntity.status(HttpStatus.OK).body("success");
