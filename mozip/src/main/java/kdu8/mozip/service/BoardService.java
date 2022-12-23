@@ -3,6 +3,8 @@ package kdu8.mozip.service;
 import kdu8.mozip.entity.Applicant;
 import kdu8.mozip.entity.Board;
 import kdu8.mozip.entity.User;
+import kdu8.mozip.exception.BoardDoesntExistException;
+import kdu8.mozip.exception.NotWriterException;
 import kdu8.mozip.presentation.dto.board.BoardListResponse;
 import kdu8.mozip.presentation.dto.board.BoardRequest;
 import kdu8.mozip.presentation.dto.board.BoardResponse;
@@ -42,6 +44,7 @@ public class BoardService {
         List<BoardListResponse> dtoList = new ArrayList<>();
 
         for(Board board : listBoard ) {
+            checkExDate(board);
             dtoList.add(BoardListResponse.getBoardListResponse(board, applicantRepository));
         }
 
@@ -67,7 +70,7 @@ public class BoardService {
                     .users(users)
                     .build();
         }
-        throw new Exception("보드 없음");
+        throw new BoardDoesntExistException("보드 없음");
     }
 
     public Board createBoard(User user, BoardRequest boardRequest) {
@@ -87,10 +90,10 @@ public class BoardService {
             if (board.getWriterId() == userId) {
                 return board;
             }else {
-                throw new Exception("같은 사용자가 아닙니다.");
+                throw new NotWriterException("같은 사용자가 아닙니다.");
             }
         } else {
-            throw new Exception("글이 없습니다.");
+            throw new BoardDoesntExistException("글이 없습니다.");
         }
     }
 
@@ -102,6 +105,7 @@ public class BoardService {
         board.setTitle(boardRequest.getTitle());
         board.setMaxApp(boardRequest.getMaxApp());
         board.setExDate(boardRequest.getExDate());
+        checkExDate(board);
         return boardRepository.save(board);
     }
 

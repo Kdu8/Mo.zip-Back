@@ -2,6 +2,9 @@ package kdu8.mozip.presentation.controller;
 
 import io.swagger.annotations.*;
 import kdu8.mozip.entity.User;
+import kdu8.mozip.exception.UserDoesntExistException;
+import kdu8.mozip.exception.UserExistException;
+import kdu8.mozip.exception.VerifyCodeNotFoundException;
 import kdu8.mozip.presentation.dto.auth.RegisterRequest;
 import kdu8.mozip.presentation.dto.auth.SendEmailRequest;
 import kdu8.mozip.presentation.dto.auth.VerifyCodeRequest;
@@ -28,10 +31,16 @@ public class AuthController {
     public ResponseEntity<String> join(
             @RequestBody RegisterRequest registerRequest) throws Exception {
         String emailAddress = registerRequest.getEmail();
-        userService.join(emailAddress, registerRequest.getName());
-        String verifyCode = emailService.sendSimpleMessage(emailAddress);
-        userService.saveVerifyCode(emailAddress, verifyCode);
-        return ResponseEntity.status(HttpStatus.OK).body("success");
+        try {
+            userService.join(emailAddress, registerRequest.getName());
+            String verifyCode = emailService.sendSimpleMessage(emailAddress);
+            userService.saveVerifyCode(emailAddress, verifyCode);
+            return ResponseEntity.status(HttpStatus.OK).body("success");
+        }catch (UserExistException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email이 올바르지 않습니다");
+        }
     }
 
     @PostMapping("/emailVerify")
@@ -46,8 +55,15 @@ public class AuthController {
 
         // 이메일을 보낸 후 사용자가 있는 지 검증함. 바꿔야 함.
         String emailAddress = email.getEmail();
-        String verifyCode = emailService.sendSimpleMessage(emailAddress);
-        userService.saveVerifyCode(emailAddress, verifyCode);
+
+        try {
+            String verifyCode = emailService.sendSimpleMessage(emailAddress);
+            userService.saveVerifyCode(emailAddress, verifyCode);
+        }catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email이 올바르지 않습니다");
+        }catch (UserDoesntExistException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
 
         return ResponseEntity.status(HttpStatus.OK).body("success");
     }
@@ -67,7 +83,7 @@ public class AuthController {
             session.setAttribute("user", user);
             return ResponseEntity.status(HttpStatus.OK).body(user);
 
-        } catch (Exception e) {
+        } catch (VerifyCodeNotFoundException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
@@ -90,12 +106,3 @@ public class AuthController {
     }
 
 }
-
-
-//    private final UserService userService;
-//
-//    @PostMapping
-//    public ResponseEntity<Void> login(@RequestBody SignInRequest request) throws Exception {
-//        User data = userService.login(request);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }

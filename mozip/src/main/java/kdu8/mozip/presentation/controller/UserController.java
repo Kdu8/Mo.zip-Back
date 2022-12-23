@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import kdu8.mozip.entity.User;
+import kdu8.mozip.exception.UserDoesntExistException;
 import kdu8.mozip.presentation.dto.board.BoardListResponse;
 import kdu8.mozip.presentation.dto.user.UserResponse;
 import kdu8.mozip.service.UserService;
@@ -34,22 +35,20 @@ public class UserController {
     })
     public ResponseEntity<UserResponse> getMyData(HttpServletRequest request) {
 
-        User user;
         try {
-            HttpSession session = request.getSession(false);
-            user = (User) session.getAttribute("user");
-        } catch (NullPointerException e) {
+            User user = userService.authUser(request);
+            List<BoardListResponse> myBoards = userService.getMyBoards(user.getId());
+            List<BoardListResponse> myApplyBoards = userService.getMyApplyBoards(user.getId());
+
+            return ResponseEntity.status(HttpStatus.OK).body(UserResponse.builder()
+                    .user(user)
+                    .myBoards(myBoards)
+                    .myApplyBoards(myApplyBoards)
+                    .build());
+        } catch (UserDoesntExistException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
 
-        List<BoardListResponse> myBoards = userService.getMyBoards(user.getId());
-        List<BoardListResponse> myApplyBoards = userService.getMyApplyBoards(user.getId());
-
-        return ResponseEntity.status(HttpStatus.OK).body(UserResponse.builder()
-                .user(user)
-                .myBoards(myBoards)
-                .myApplyBoards(myApplyBoards)
-                .build());
 
     }
 

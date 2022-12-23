@@ -20,8 +20,8 @@ public class EmailService {
 
     private String ePw;
 
-    private MimeMessage createMessage(String to)throws Exception{
-        MimeMessage  message = EmailSender.createMimeMessage();
+    private MimeMessage createMessage(String to) throws Exception {
+        MimeMessage message = EmailSender.createMimeMessage();
 
         ePw = createKey();
 

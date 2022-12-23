@@ -2,6 +2,7 @@ package kdu8.mozip.service;
 
 import kdu8.mozip.entity.Applicant;
 import kdu8.mozip.entity.Board;
+import kdu8.mozip.exception.CanNotApplyException;
 import kdu8.mozip.repository.ApplicantRepository;
 import kdu8.mozip.repository.BoardRepository;
 import kdu8.mozip.repository.UserRepository;
@@ -53,11 +54,11 @@ public class ApplicantService {
                 }
 
             } else {
-                throw new Exception("마감되었습니다.");
+                throw new CanNotApplyException("마감되었습니다.");
             }
 
         } else {
-            throw new Exception("작성자는 신청할 수 없습니다.");
+            throw new CanNotApplyException("작성자는 신청할 수 없습니다.");
         }
     }
 
