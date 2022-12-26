@@ -135,6 +135,7 @@ public class BoardController {
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 400, message = "신청할 수 없는 게시글"),
             @ApiResponse(code = 401, message = "로그인 되지 않음"),
+            @ApiResponse(code = 404, message = "보드 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<String> toggleApply(HttpServletRequest request, @PathVariable int id) throws Exception{
@@ -147,6 +148,8 @@ public class BoardController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }catch (CanNotApplyException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }catch (BoardDoesntExistException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
 
     }

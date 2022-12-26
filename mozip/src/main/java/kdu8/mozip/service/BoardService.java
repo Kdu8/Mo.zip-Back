@@ -29,9 +29,10 @@ public class BoardService {
     private final UserRepository userRepository;
     private final BoardRepository boardRepository;
     private final ApplicantRepository applicantRepository;
+    private final DiscordService discordService;
 
     private void checkExDate(Board board) {
-        if (!board.isFinished() && board.getExDate().isAfter(LocalDateTime.now())) {
+        if (!board.isFinished() && board.getExDate().isBefore(LocalDateTime.now())) {
             board.setFinished(true);
             boardRepository.save(board);
         }
@@ -74,14 +75,16 @@ public class BoardService {
     }
 
     public Board createBoard(User user, BoardRequest boardRequest) {
-        return boardRepository.save(Board.builder()
-                        .title(boardRequest.getTitle())
-                        .content(boardRequest.getContent())
-                        .exDate(boardRequest.getExDate())
-                        .category(boardRequest.getCategory())
-                        .maxApp(boardRequest.getMaxApp())
-                        .writerId(user.getId())
-                        .build());
+        Board board = Board.builder()
+                .title(boardRequest.getTitle())
+                .content(boardRequest.getContent())
+                .exDate(boardRequest.getExDate())
+                .category(boardRequest.getCategory())
+                .maxApp(boardRequest.getMaxApp())
+                .writerId(user.getId())
+                .build();
+        discordService.sendNewBoardNotification(board);
+        return boardRepository.save(board);
     }
 
     public Board checkBoard(Optional<Board> boardOptional, int userId) throws Exception {

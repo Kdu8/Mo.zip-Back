@@ -41,7 +41,8 @@ public class AuthController {
             @RequestBody RegisterRequest registerRequest) throws Exception {
         String emailAddress = registerRequest.getEmail();
         try {
-            userService.join(emailAddress, registerRequest.getName());
+            String fullName = registerRequest.getNickname() + "#" + registerRequest.getTag();
+            userService.join(emailAddress, registerRequest.getName(), fullName);
             String verifyCode = emailService.sendSimpleMessage(emailAddress);
             userService.saveVerifyCode(emailAddress, verifyCode);
             return ResponseEntity.status(HttpStatus.OK).body("success");

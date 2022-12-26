@@ -12,8 +12,8 @@ public class SocketConfiguration implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/testa");
-        config.setApplicationDestinationPrefixes("/test");
+        config.enableSimpleBroker("/queue");
+        config.setApplicationDestinationPrefixes("/app");
     }
 
     public void registerStompEndpoints(StompEndpointRegistry stompEndpointRegistry) {

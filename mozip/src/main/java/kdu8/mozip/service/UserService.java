@@ -44,10 +44,10 @@ public class UserService {
         }
     }
 
-    public void join(String email, String name) throws Exception {
+    public void join(String email, String name, String fullName) throws Exception {
         Optional<User> user = userRepository.findByEmail(email);
         if (user.isEmpty()) {
-            userRepository.save(User.builder().name(name).email(email).build());
+            userRepository.save(User.builder().name(name).email(email).discord(fullName).build());
         } else {
             throw new UserExistException("유저가 있음");
         }
