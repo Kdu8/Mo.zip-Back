@@ -98,6 +98,10 @@ public class AuthController {
         }
     }
 
+//    민욱이 + 원욱이 = 백엔드;
+//    새미 + 준이 = 프론트엔드;
+//    곽두팔 = 준이+ 원욱이+ 민욱이+ 새미;
+
     @GetMapping("/logout")
     @ApiOperation(value = "사용자 로그아웃", notes = "세션을 제거")
     @ApiResponses({
