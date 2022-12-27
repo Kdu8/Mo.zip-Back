@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "127.0.0.1")
+@CrossOrigin(origins = "https://63aaf7a8f8c33213936f490c--mo-zip.netlify.app")
 @RequiredArgsConstructor
 public class UserController {
 
