@@ -26,7 +26,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "127.0.0.1")
 @RequiredArgsConstructor
 @RequestMapping("/boards")
 public class BoardController {
