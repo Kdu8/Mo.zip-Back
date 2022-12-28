@@ -26,7 +26,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "https://mo-zip.netlify.app")
+@CrossOrigin(origins = "https://mo-zip.online")
 @RequiredArgsConstructor
 @RequestMapping("/boards")
 public class BoardController {
