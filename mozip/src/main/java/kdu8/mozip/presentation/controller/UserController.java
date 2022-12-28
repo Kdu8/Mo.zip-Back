@@ -20,13 +20,13 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "https://63aaf7a8f8c33213936f490c--mo-zip.netlify.app")
+@CrossOrigin(origins = "https://master--mo-zip.netlify.app")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("uers/me")
+    @GetMapping("users/me")
     @ApiOperation(value = "마이 페이지", notes = "요청을 날린 유저의 정보 및 유저가 쓴 글, 신청한 글을 응답함")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),

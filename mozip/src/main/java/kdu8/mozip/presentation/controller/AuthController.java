@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @RequiredArgsConstructor
-@CrossOrigin(origins = "https://63aaf7a8f8c33213936f490c--mo-zip.netlify.app")
+@CrossOrigin(origins = "https://master--mo-zip.netlify.app")
 @RequestMapping("/auth")
 @RestController
 public class AuthController {
