@@ -2,6 +2,7 @@ package kdu8.mozip.service;
 
 import kdu8.mozip.entity.Applicant;
 import kdu8.mozip.entity.Board;
+import kdu8.mozip.entity.Category;
 import kdu8.mozip.entity.User;
 import kdu8.mozip.exception.BoardDoesntExistException;
 import kdu8.mozip.exception.NotWriterException;
@@ -24,7 +25,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class BoardService {
+public class BoardService{
 
     private final UserRepository userRepository;
     private final BoardRepository boardRepository;
@@ -38,8 +39,8 @@ public class BoardService {
         }
     }
 
-    public List<BoardListResponse> getBoardListWithPage(@PageableDefault(size=10, direction = Sort.Direction.DESC) Pageable pageable) {
-        List<Board> listBoard = boardRepository.findAll(pageable).getContent();
+    public List<BoardListResponse> getBoardListWithPage(@PageableDefault(size=10, direction = Sort.Direction.DESC) Pageable pageable, Category category) {
+        List<Board> listBoard = boardRepository.findAllByCategory(category, pageable).getContent();
         //nullpoint Ex 가능성 있음
 
         List<BoardListResponse> dtoList = new ArrayList<>();

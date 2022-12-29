@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import kdu8.mozip.entity.Board;
+import kdu8.mozip.entity.Category;
 import kdu8.mozip.entity.User;
 import kdu8.mozip.exception.BoardDoesntExistException;
 import kdu8.mozip.exception.CanNotApplyException;
@@ -42,8 +43,8 @@ public class BoardController {
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<List<BoardListResponse>> getBoards(Pageable pageable) throws Exception {
-        List<BoardListResponse> boardPage = boardService.getBoardListWithPage(pageable);
+    public ResponseEntity<List<BoardListResponse>> getBoards(Pageable pageable, @RequestParam("category") Category category) throws Exception {
+        List<BoardListResponse> boardPage = boardService.getBoardListWithPage(pageable, category);
         return ResponseEntity.status(HttpStatus.OK).body(boardPage);
     }
     @PostMapping("")
