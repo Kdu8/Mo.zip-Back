@@ -46,7 +46,7 @@ public class BoardService {
 
         for(Board board : listBoard ) {
             checkExDate(board);
-            dtoList.add(BoardListResponse.getBoardListResponse(board, applicantRepository));
+            dtoList.add(BoardListResponse.getBoardListResponse(board, applicantRepository, userRepository));
         }
 
         return dtoList;
@@ -69,6 +69,7 @@ public class BoardService {
             return BoardResponse.builder()
                     .board(board)
                     .users(users)
+                    .writerName(userRepository.findById(board.getWriterId()).get().getName())
                     .build();
         }
         throw new BoardDoesntExistException("보드 없음");
@@ -78,6 +79,7 @@ public class BoardService {
         Board board = Board.builder()
                 .title(boardRequest.getTitle())
                 .content(boardRequest.getContent())
+                .requirement(boardRequest.getRequirement())
                 .exDate(boardRequest.getExDate())
                 .category(boardRequest.getCategory())
                 .maxApp(boardRequest.getMaxApp())
@@ -108,6 +110,7 @@ public class BoardService {
         board.setTitle(boardRequest.getTitle());
         board.setMaxApp(boardRequest.getMaxApp());
         board.setExDate(boardRequest.getExDate());
+        board.setRequirement(boardRequest.getRequirement());
         checkExDate(board);
         return boardRepository.save(board);
     }

@@ -72,7 +72,7 @@ public class UserService {
         List<BoardListResponse> dtoList = new ArrayList<>();
 
         for(Board board : listBoard ) {
-            dtoList.add(BoardListResponse.getBoardListResponse(board, applicantRepository));
+            dtoList.add(BoardListResponse.getBoardListResponse(board, applicantRepository, userRepository));
         }
 
         return dtoList;
@@ -85,7 +85,7 @@ public class UserService {
 
         for (Applicant applicant: applicantList) {
             Board board = boardRepository.findById(applicant.getBoardId()).get();
-            dtoList.add(BoardListResponse.getBoardListResponse(board, applicantRepository));
+            dtoList.add(BoardListResponse.getBoardListResponse(board, applicantRepository, userRepository));
         }
 
         return dtoList;

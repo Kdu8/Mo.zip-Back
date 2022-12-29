@@ -16,4 +16,5 @@ public class BoardRequest {
     private Category category;
     private int maxApp;
     private LocalDateTime exDate;
+    private String requirement;
 }

@@ -37,7 +37,7 @@ public class ApplicantService {
                     for (Applicant applicant : applicants) {
                         if (applicant.getUserId() == userId && board.getExDate().isAfter(LocalDateTime.now())) {
                             // 이미 신청함(신청 취소 필요)
-                            discordService.sendApplicantChangeNotification(BoardListResponse.getBoardListResponse(board, applicantRepository), false);
+                            discordService.sendApplicantChangeNotification(BoardListResponse.getBoardListResponse(board, applicantRepository, userRepository), false);
                             applicantRepository.delete(applicant);
                             board.setFinished(false);
                             return;
@@ -47,7 +47,7 @@ public class ApplicantService {
                     applicantCount += applicants.size();
                 }
 
-                discordService.sendApplicantChangeNotification(BoardListResponse.getBoardListResponse(board, applicantRepository), true);
+                discordService.sendApplicantChangeNotification(BoardListResponse.getBoardListResponse(board, applicantRepository, userRepository), true);
                 //신청 안함(신청 필요)
                 // 여기서 보내줌 보드와 보드 신청자 수 정보
                 applicantRepository.save(Applicant.builder()

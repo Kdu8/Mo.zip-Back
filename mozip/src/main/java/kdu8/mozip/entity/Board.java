@@ -26,5 +26,6 @@ public class Board {
     private LocalDateTime exDate;
     @ColumnDefault("false")
     private boolean finished;
+    private String requirement;
 }
 

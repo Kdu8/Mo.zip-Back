@@ -19,4 +19,6 @@ public class BoardResponse {
     Board board;
 
     List<User> users;
+
+    String writerName;
 }
