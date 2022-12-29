@@ -16,7 +16,6 @@ public class SwaggerConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.OAS_30)
-                .host("api.mo-zip.online:80")
                 .useDefaultResponseMessages(false)
                 .select()
                 .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
