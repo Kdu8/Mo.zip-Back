@@ -68,6 +68,7 @@ public class AuthController {
         String emailAddress = email.getEmail();
 
         try {
+            if (!userService.checkUserExists(emailAddress)) throw new UserDoesntExistException("유저 존재하지 않음");
             String verifyCode = emailService.sendSimpleMessage(emailAddress);
             userService.saveVerifyCode(emailAddress, verifyCode);
         }catch (UserDoesntExistException e) {

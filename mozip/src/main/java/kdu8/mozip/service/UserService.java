@@ -34,14 +34,10 @@ public class UserService {
 
     private final ApplicantRepository applicantRepository;
 
-    public void saveVerifyCode(String email, String verifyCode) throws Exception {
-        Optional<User> user = userRepository.findByEmail(email);
-        if (user.isPresent()) {
-            int userId = user.get().getId();
-            verifyCodeRepository.save(VerifyCode.builder().userId(userId).verifyCode(verifyCode).build());
-        } else {
-            throw new UserDoesntExistException("유저가 없음");
-        }
+    public void saveVerifyCode(String email, String verifyCode) {
+        User user = userRepository.findByEmail(email).get();
+        int userId = user.getId();
+        verifyCodeRepository.save(VerifyCode.builder().userId(userId).verifyCode(verifyCode).build());
     }
 
     public void join(String email, String name, String fullName) throws Exception {
@@ -100,5 +96,9 @@ public class UserService {
         } catch (Exception e) {
             throw new UserDoesntExistException("유저가 존재하지 않음");
         }
+    }
+
+    public boolean checkUserExists(String email) {
+        return userRepository.existsByEmail(email);
     }
 }
