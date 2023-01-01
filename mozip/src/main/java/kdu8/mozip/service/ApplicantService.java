@@ -57,6 +57,7 @@ public class ApplicantService {
 
                 if(applicantCount == board.getMaxApp()) {
                     board.setFinished(true);
+                    boardRepository.save(board);
                 }
 
             } else {
