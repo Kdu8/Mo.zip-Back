@@ -40,6 +40,7 @@ public class ApplicantService {
                             discordService.sendApplicantChangeNotification(BoardListResponse.getBoardListResponse(board, applicantRepository, userRepository), false);
                             applicantRepository.delete(applicant);
                             board.setFinished(false);
+                            boardRepository.save(board);
                             return;
                         }
                     }
