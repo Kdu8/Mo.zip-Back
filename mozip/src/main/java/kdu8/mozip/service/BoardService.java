@@ -86,8 +86,9 @@ public class BoardService{
                 .maxApp(boardRequest.getMaxApp())
                 .writerId(user.getId())
                 .build();
+        board = boardRepository.save(board);
         discordService.sendNewBoardNotification(board);
-        return boardRepository.save(board);
+        return board;
     }
 
     public Board checkBoard(Optional<Board> boardOptional, int userId) throws Exception {
